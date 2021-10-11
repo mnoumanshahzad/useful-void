@@ -1,0 +1,20 @@
+name: Test GH Identity
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy_resources:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - run: printenv
+      - name: Assume deployment role
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          aws-region: eu-central-1
+          role-to-assume: arn:aws:iam::174491203957:role/nouman-playground
+      - run: aws s3 ls
+
